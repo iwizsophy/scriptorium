@@ -1,0 +1,161 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Validate tag format
+        shell: bash
+        run: |
+          if [[ ! "${GITHUB_REF_NAME}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release tags must use the format v<major>.<minor>.<patch>." >&2
+            exit 1
+          fi
+
+      - name: Validate annotated tag
+        shell: bash
+        run: |
+          tag_ref="refs/tags/${GITHUB_REF_NAME}"
+          git fetch origin "${tag_ref}:${tag_ref}" --force
+          object_type="$(git cat-file -t "${tag_ref}")"
+          if [[ "${object_type}" != "tag" ]]; then
+            echo "Release tags must be annotated tags." >&2
+            exit 1
+          fi
+
+      - name: Validate tag commit is on main
+        shell: bash
+        run: |
+          git fetch origin refs/heads/main:refs/remotes/origin/main
+          if ! git merge-base --is-ancestor HEAD refs/remotes/origin/main; then
+            echo "Release tags must point to commits reachable from main." >&2
+            exit 1
+          fi
+
+      - name: Test
+        run: go test ./...
+
+  build-release-assets:
+    needs: verify
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+          - goos: linux
+            goarch: arm64
+          - goos: windows
+            goarch: amd64
+          - goos: windows
+            goarch: arm64
+          - goos: darwin
+            goarch: amd64
+          - goos: darwin
+            goarch: arm64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Build release archive
+        shell: bash
+        if: matrix.goos == 'darwin'
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          os="${{ matrix.goos }}"
+          arch="${{ matrix.goarch }}"
+          archive_name="scriptorium_${version}_${os}_${arch}"
+          archive_dir="dist/${archive_name}"
+          mkdir -p "${archive_dir}"
+
+          ext=""
+          if [[ "${os}" == "windows" ]]; then
+            ext=".exe"
+          fi
+
+          ldflags="-s -w -X github.com/iwizsophy/scriptorium/internal/app.ServerVersion=${version}"
+
+          CGO_ENABLED=0 GOOS="${os}" GOARCH="${arch}" \
+            go build -trimpath -ldflags "${ldflags}" -o "${archive_dir}/scriptorium${ext}" ./cmd/scriptorium
+          CGO_ENABLED=0 GOOS="${os}" GOARCH="${arch}" \
+            go build -trimpath -ldflags "${ldflags}" -o "${archive_dir}/scriptorium-index${ext}" ./cmd/build-docs-index
+          CGO_ENABLED=0 GOOS="${os}" GOARCH="${arch}" \
+            go build -trimpath -ldflags "${ldflags}" -o "${archive_dir}/scriptorium-snapshot${ext}" ./cmd/build-git-snapshot
+
+          cp LICENSE README.md README.ja.md "${archive_dir}/"
+          (
+            cd dist
+            zip -r "${archive_name}.zip" "${archive_name}"
+          )
+
+      - name: Build Linux release archive
+        if: matrix.goos == 'linux'
+        shell: pwsh
+        run: |
+          $version = $env:GITHUB_REF_NAME.Substring(1)
+          ./scripts/build-linux-dist.ps1 -Version $version -Arch "${{ matrix.goarch }}" -OutputDir "dist"
+
+      - name: Build Windows release archive
+        if: matrix.goos == 'windows'
+        shell: pwsh
+        run: |
+          $version = $env:GITHUB_REF_NAME.Substring(1)
+          ./scripts/build-windows-dist.ps1 -Version $version -Arch "${{ matrix.goarch }}" -OutputDir "dist"
+
+      - name: Upload release archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: |
+            dist/*.zip
+            dist/*.tar.gz
+          if-no-files-found: error
+
+  publish-release:
+    needs: build-release-assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download release archives
+        uses: actions/download-artifact@v8
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          files: |
+            dist/*.zip
+            dist/*.tar.gz
