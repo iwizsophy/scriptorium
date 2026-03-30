@@ -131,7 +131,7 @@ jobs:
           ./scripts/build-windows-dist.ps1 -Version $version -Arch "${{ matrix.goarch }}" -OutputDir "dist"
 
       - name: Upload release archive
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-${{ matrix.goos }}-${{ matrix.goarch }}
           path: |
