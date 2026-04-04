@@ -44,16 +44,18 @@ The release workflow builds versioned archives for:
 - macOS `amd64`, `arm64`
 
 Linux release archives contain `scriptorium`, `scriptorium-index`,
-`scriptorium-snapshot`, `LICENSE`, `THIRD-PARTY-NOTICES.md`, and
-user-facing Linux setup guides under `docs/`.
-
-Windows release archives contain `scriptorium.exe`,
-`scriptorium-index.exe`, `scriptorium-snapshot.exe`, `LICENSE`,
-`THIRD-PARTY-NOTICES.md`, and user-facing Windows setup guides under
+`scriptorium-snapshot`, `scriptorium.sbom.spdx.json`, `LICENSE`,
+`THIRD-PARTY-NOTICES.md`, and user-facing Linux setup guides under
 `docs/`.
 
+Windows release archives contain `scriptorium.exe`,
+`scriptorium-index.exe`, `scriptorium-snapshot.exe`,
+`scriptorium.sbom.spdx.json`, `LICENSE`, `THIRD-PARTY-NOTICES.md`, and
+user-facing Windows setup guides under `docs/`.
+
 macOS release archives contain the platform binaries together with the
-repository README files, `LICENSE`, and `THIRD-PARTY-NOTICES.md`.
+repository README files, `scriptorium.sbom.spdx.json`, `LICENSE`, and
+`THIRD-PARTY-NOTICES.md`.
 
 Normal CI validates pull requests and non-tag pushes on Linux, Windows, and macOS.
 

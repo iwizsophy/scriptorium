@@ -6,7 +6,9 @@ param(
     [ValidateSet("amd64", "arm64")]
     [string]$Arch,
 
-    [string]$OutputDir = "dist"
+    [string]$OutputDir = "dist",
+
+    [string]$SyftCommand = "syft"
 )
 
 $ErrorActionPreference = "Stop"
@@ -24,6 +26,25 @@ function Invoke-NativeCommand {
     if ($LASTEXITCODE -ne 0) {
         throw "$FilePath failed with exit code $LASTEXITCODE"
     }
+}
+
+function New-SbomFile {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$ToolPath,
+
+        [Parameter(Mandatory = $true)]
+        [string]$ScanPath,
+
+        [Parameter(Mandatory = $true)]
+        [string]$OutputPath
+    )
+
+    if (-not (Get-Command $ToolPath -ErrorAction SilentlyContinue)) {
+        throw "Syft command '$ToolPath' was not found. Install Syft or pass -SyftCommand with the Syft executable path."
+    }
+
+    Invoke-NativeCommand -FilePath $ToolPath -Arguments @("dir:$ScanPath", "-o", "spdx-json=$OutputPath")
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
@@ -64,6 +85,7 @@ finally {
     $env:GOARCH = $savedEnv.GOARCH
 }
 
+New-SbomFile -ToolPath $SyftCommand -ScanPath $stagingDir -OutputPath (Join-Path $stagingDir "scriptorium.sbom.spdx.json")
 Copy-Item -LiteralPath (Join-Path $repoRoot "LICENSE") -Destination $stagingDir
 Copy-Item -LiteralPath (Join-Path $repoRoot "THIRD-PARTY-NOTICES.md") -Destination $stagingDir
 Copy-Item -LiteralPath (Join-Path (Join-Path $repoRoot "docs") "linux-setup.md") -Destination (Join-Path $docsDir "linux-setup.md")

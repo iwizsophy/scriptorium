@@ -43,18 +43,20 @@
 - macOS `amd64`, `arm64`
 
 Linux 向け archive には、対象プラットフォーム向けの `scriptorium`、
-`scriptorium-index`、`scriptorium-snapshot`、`LICENSE`、
-`THIRD-PARTY-NOTICES.md`、および利用者向け Linux
-セットアップガイドを `docs/` 配下に含めます。
+`scriptorium-index`、`scriptorium-snapshot`、
+`scriptorium.sbom.spdx.json`、`LICENSE`、`THIRD-PARTY-NOTICES.md`、
+および利用者向け Linux セットアップガイドを `docs/`
+配下に含めます。
 
 Windows 向け archive には、`scriptorium.exe`、
-`scriptorium-index.exe`、`scriptorium-snapshot.exe`、`LICENSE`、
-`THIRD-PARTY-NOTICES.md`、および利用者向け Windows
-セットアップガイドを `docs/` 配下に含めます。
+`scriptorium-index.exe`、`scriptorium-snapshot.exe`、
+`scriptorium.sbom.spdx.json`、`LICENSE`、
+`THIRD-PARTY-NOTICES.md`、および利用者向け Windows セットアップ
+ガイドを `docs/` 配下に含めます。
 
 macOS 向け archive には、対象プラットフォーム向けのバイナリ、
-repository README 一式、`LICENSE`、`THIRD-PARTY-NOTICES.md` を
-含めます。
+repository README 一式、`scriptorium.sbom.spdx.json`、`LICENSE`、
+`THIRD-PARTY-NOTICES.md` を含めます。
 
 通常の CI では、pull request と non-tag push を Linux、Windows、macOS で検証します。
 
