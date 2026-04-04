@@ -12,6 +12,13 @@ repository dependency graph through `go.mod`.
   reviewed during dependency updates and release validation, but are not listed
   separately by default.
 
+## Trademarks
+
+- Product names, project names, module names, and logos referenced in this
+  document remain the property of their respective owners.
+- This document provides attribution and notice information only and does not
+  grant any trademark license or imply endorsement.
+
 ## Current modules
 
 ### golang.org/x/text v0.35.0
