@@ -14,7 +14,7 @@ const (
 	DefaultName   = "scriptorium"
 )
 
-var ServerVersion = "1.0.0"
+var ServerVersion = "1.1.0"
 
 type BuildGitSnapshotOptions struct {
 	RepoPath       string

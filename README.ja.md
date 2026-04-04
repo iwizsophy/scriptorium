@@ -28,6 +28,8 @@
 - 日本語セキュリティポリシー: [SECURITY.ja.md](./SECURITY.ja.md)
 - サポートポリシー: [.github/SUPPORT.md](./.github/SUPPORT.md)
 - 日本語サポートポリシー: [.github/SUPPORT.ja.md](./.github/SUPPORT.ja.md)
+- Changelog: [CHANGELOG.md](./CHANGELOG.md)
+- 日本語 changelog: [CHANGELOG.ja.md](./CHANGELOG.ja.md)
 - ライセンス: [LICENSE](./LICENSE)
 - 日本語ライセンス参考訳: [LICENSE.ja.md](./LICENSE.ja.md)
 - Third-party notices: [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)
@@ -35,6 +37,8 @@
 ## リリース
 
 `v<major>.<minor>.<patch>` 形式の注釈付きタグを使って GitHub Releases を公開します。
+
+version ごとの release notes は [CHANGELOG.ja.md](./CHANGELOG.ja.md) にまとめます。
 
 リリースワークフローは、次のプラットフォーム向けにバージョン付きアーカイブを生成します。
 

@@ -28,6 +28,8 @@ Product-facing behavior should follow the runtime docs above.
 - Japanese security policy: [SECURITY.ja.md](./SECURITY.ja.md)
 - Support policy: [.github/SUPPORT.md](./.github/SUPPORT.md)
 - Japanese support policy: [.github/SUPPORT.ja.md](./.github/SUPPORT.ja.md)
+- Changelog: [CHANGELOG.md](./CHANGELOG.md)
+- Japanese changelog: [CHANGELOG.ja.md](./CHANGELOG.ja.md)
 - License: [LICENSE](./LICENSE)
 - Japanese license reference: [LICENSE.ja.md](./LICENSE.ja.md)
 - Third-party notices: [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)
@@ -36,6 +38,8 @@ Product-facing behavior should follow the runtime docs above.
 
 Annotated tags in the format `v<major>.<minor>.<patch>` are used to publish
 GitHub Releases.
+
+Versioned release notes are maintained in [CHANGELOG.md](./CHANGELOG.md).
 
 The release workflow builds versioned archives for:
 
