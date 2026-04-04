@@ -85,6 +85,10 @@ jobs:
           go-version-file: go.mod
           cache: true
 
+      - name: Download Syft
+        id: install-syft
+        uses: anchore/sbom-action/download-syft@v0
+
       - name: Build release archive
         shell: bash
         if: matrix.goos == 'darwin'
@@ -109,8 +113,10 @@ jobs:
             go build -trimpath -ldflags "${ldflags}" -o "${archive_dir}/scriptorium-index${ext}" ./cmd/build-docs-index
           CGO_ENABLED=0 GOOS="${os}" GOARCH="${arch}" \
             go build -trimpath -ldflags "${ldflags}" -o "${archive_dir}/scriptorium-snapshot${ext}" ./cmd/build-git-snapshot
+          "${{ steps.install-syft.outputs.cmd }}" "dir:${archive_dir}" \
+            -o "spdx-json=${archive_dir}/scriptorium.sbom.spdx.json"
 
-          cp LICENSE README.md README.ja.md "${archive_dir}/"
+          cp LICENSE README.md README.ja.md THIRD-PARTY-NOTICES.md "${archive_dir}/"
           (
             cd dist
             zip -r "${archive_name}.zip" "${archive_name}"
@@ -121,14 +127,14 @@ jobs:
         shell: pwsh
         run: |
           $version = $env:GITHUB_REF_NAME.Substring(1)
-          ./scripts/build-linux-dist.ps1 -Version $version -Arch "${{ matrix.goarch }}" -OutputDir "dist"
+          ./scripts/build-linux-dist.ps1 -Version $version -Arch "${{ matrix.goarch }}" -OutputDir "dist" -SyftCommand "${{ steps.install-syft.outputs.cmd }}"
 
       - name: Build Windows release archive
         if: matrix.goos == 'windows'
         shell: pwsh
         run: |
           $version = $env:GITHUB_REF_NAME.Substring(1)
-          ./scripts/build-windows-dist.ps1 -Version $version -Arch "${{ matrix.goarch }}" -OutputDir "dist"
+          ./scripts/build-windows-dist.ps1 -Version $version -Arch "${{ matrix.goarch }}" -OutputDir "dist" -SyftCommand "${{ steps.install-syft.outputs.cmd }}"
 
       - name: Upload release archive
         uses: actions/upload-artifact@v7
