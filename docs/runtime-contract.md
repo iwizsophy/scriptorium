@@ -22,7 +22,7 @@ The runtime behavior clients and operators should rely on is documented here and
 - Transport: stdio
 - Stdio requests: newline-delimited JSON-RPC and `Content-Length` framed JSON-RPC are both accepted
 - Stdio responses: the runtime mirrors the request framing mode for compatibility
-- Server version: `1.0.0`
+- Server version: `1.1.0`
 - Default server name: `scriptorium`; when `SCRIPTORIUM_MCP_PROFILE` is set and `SCRIPTORIUM_SERVER_NAME` is unset, the default becomes `scriptorium-<profile>`
 - Ready log: the runtime emits an `MCP server ready` log line after startup
 

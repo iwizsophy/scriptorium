@@ -28,12 +28,17 @@
 - 日本語セキュリティポリシー: [SECURITY.ja.md](./SECURITY.ja.md)
 - サポートポリシー: [.github/SUPPORT.md](./.github/SUPPORT.md)
 - 日本語サポートポリシー: [.github/SUPPORT.ja.md](./.github/SUPPORT.ja.md)
+- Changelog: [CHANGELOG.md](./CHANGELOG.md)
+- 日本語 changelog: [CHANGELOG.ja.md](./CHANGELOG.ja.md)
 - ライセンス: [LICENSE](./LICENSE)
 - 日本語ライセンス参考訳: [LICENSE.ja.md](./LICENSE.ja.md)
+- Third-party notices: [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)
 
 ## リリース
 
 `v<major>.<minor>.<patch>` 形式の注釈付きタグを使って GitHub Releases を公開します。
+
+version ごとの release notes は [CHANGELOG.ja.md](./CHANGELOG.ja.md) にまとめます。
 
 リリースワークフローは、次のプラットフォーム向けにバージョン付きアーカイブを生成します。
 
@@ -41,11 +46,21 @@
 - Windows `amd64`, `arm64`
 - macOS `amd64`, `arm64`
 
-Linux 向け archive には、対象プラットフォーム向けの `scriptorium`、`scriptorium-index`、`scriptorium-snapshot`、`LICENSE`、および利用者向け Linux セットアップガイドを `docs/` 配下に含めます。
+Linux 向け archive には、対象プラットフォーム向けの `scriptorium`、
+`scriptorium-index`、`scriptorium-snapshot`、
+`scriptorium.sbom.spdx.json`、`LICENSE`、`THIRD-PARTY-NOTICES.md`、
+および利用者向け Linux セットアップガイドを `docs/`
+配下に含めます。
 
-Windows 向け archive には、`scriptorium.exe`、`scriptorium-index.exe`、`scriptorium-snapshot.exe`、`LICENSE`、および利用者向け Windows セットアップガイドを `docs/` 配下に含めます。
+Windows 向け archive には、`scriptorium.exe`、
+`scriptorium-index.exe`、`scriptorium-snapshot.exe`、
+`scriptorium.sbom.spdx.json`、`LICENSE`、
+`THIRD-PARTY-NOTICES.md`、および利用者向け Windows セットアップ
+ガイドを `docs/` 配下に含めます。
 
-macOS 向け archive には、対象プラットフォーム向けのバイナリと repository README 一式を含めます。
+macOS 向け archive には、対象プラットフォーム向けのバイナリ、
+repository README 一式、`scriptorium.sbom.spdx.json`、`LICENSE`、
+`THIRD-PARTY-NOTICES.md` を含めます。
 
 通常の CI では、pull request と non-tag push を Linux、Windows、macOS で検証します。
 

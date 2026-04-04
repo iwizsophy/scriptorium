@@ -5,7 +5,7 @@ import "testing"
 func TestBuildRuntimePayloadUsesRuntimeVersionAndSnapshotSources(t *testing.T) {
 	payload := BuildRuntimePayload(RuntimeInput{
 		ServerName:          "scriptorium",
-		ServerVersion:       "1.0.0",
+		ServerVersion:       "1.1.0",
 		Profile: ProfileInput{
 			ID:                "azure",
 			ToolPrefix:        "azure",

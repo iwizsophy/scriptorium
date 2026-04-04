@@ -22,7 +22,7 @@
 - Transport: stdio
 - Stdio request: newline-delimited JSON-RPC と `Content-Length` framed JSON-RPC の両方を受け付けます
 - Stdio response: 互換性のため request 側の framing mode に合わせて返します
-- Server version: `1.0.0`
+- Server version: `1.1.0`
 - Default server name: `scriptorium`。`SCRIPTORIUM_MCP_PROFILE` が設定されていて `SCRIPTORIUM_SERVER_NAME` が未設定なら `scriptorium-<profile>`
 - Ready log: 起動完了後に `MCP server ready`
 
