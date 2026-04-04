@@ -30,6 +30,7 @@ Product-facing behavior should follow the runtime docs above.
 - Japanese support policy: [.github/SUPPORT.ja.md](./.github/SUPPORT.ja.md)
 - License: [LICENSE](./LICENSE)
 - Japanese license reference: [LICENSE.ja.md](./LICENSE.ja.md)
+- Third-party notices: [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)
 
 ## Releases
 
@@ -43,15 +44,16 @@ The release workflow builds versioned archives for:
 - macOS `amd64`, `arm64`
 
 Linux release archives contain `scriptorium`, `scriptorium-index`,
-`scriptorium-snapshot`, `LICENSE`, and user-facing Linux setup guides under
-`docs/`.
+`scriptorium-snapshot`, `LICENSE`, `THIRD-PARTY-NOTICES.md`, and
+user-facing Linux setup guides under `docs/`.
 
 Windows release archives contain `scriptorium.exe`,
-`scriptorium-index.exe`, `scriptorium-snapshot.exe`, `LICENSE`, and
-user-facing Windows setup guides under `docs/`.
+`scriptorium-index.exe`, `scriptorium-snapshot.exe`, `LICENSE`,
+`THIRD-PARTY-NOTICES.md`, and user-facing Windows setup guides under
+`docs/`.
 
 macOS release archives contain the platform binaries together with the
-repository README files.
+repository README files, `LICENSE`, and `THIRD-PARTY-NOTICES.md`.
 
 Normal CI validates pull requests and non-tag pushes on Linux, Windows, and macOS.
 

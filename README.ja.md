@@ -30,6 +30,7 @@
 - 日本語サポートポリシー: [.github/SUPPORT.ja.md](./.github/SUPPORT.ja.md)
 - ライセンス: [LICENSE](./LICENSE)
 - 日本語ライセンス参考訳: [LICENSE.ja.md](./LICENSE.ja.md)
+- Third-party notices: [THIRD-PARTY-NOTICES.md](./THIRD-PARTY-NOTICES.md)
 
 ## リリース
 
@@ -41,11 +42,19 @@
 - Windows `amd64`, `arm64`
 - macOS `amd64`, `arm64`
 
-Linux 向け archive には、対象プラットフォーム向けの `scriptorium`、`scriptorium-index`、`scriptorium-snapshot`、`LICENSE`、および利用者向け Linux セットアップガイドを `docs/` 配下に含めます。
+Linux 向け archive には、対象プラットフォーム向けの `scriptorium`、
+`scriptorium-index`、`scriptorium-snapshot`、`LICENSE`、
+`THIRD-PARTY-NOTICES.md`、および利用者向け Linux
+セットアップガイドを `docs/` 配下に含めます。
 
-Windows 向け archive には、`scriptorium.exe`、`scriptorium-index.exe`、`scriptorium-snapshot.exe`、`LICENSE`、および利用者向け Windows セットアップガイドを `docs/` 配下に含めます。
+Windows 向け archive には、`scriptorium.exe`、
+`scriptorium-index.exe`、`scriptorium-snapshot.exe`、`LICENSE`、
+`THIRD-PARTY-NOTICES.md`、および利用者向け Windows
+セットアップガイドを `docs/` 配下に含めます。
 
-macOS 向け archive には、対象プラットフォーム向けのバイナリと repository README 一式を含めます。
+macOS 向け archive には、対象プラットフォーム向けのバイナリ、
+repository README 一式、`LICENSE`、`THIRD-PARTY-NOTICES.md` を
+含めます。
 
 通常の CI では、pull request と non-tag push を Linux、Windows、macOS で検証します。
 

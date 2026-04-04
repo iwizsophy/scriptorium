@@ -110,7 +110,7 @@ jobs:
           CGO_ENABLED=0 GOOS="${os}" GOARCH="${arch}" \
             go build -trimpath -ldflags "${ldflags}" -o "${archive_dir}/scriptorium-snapshot${ext}" ./cmd/build-git-snapshot
 
-          cp LICENSE README.md README.ja.md "${archive_dir}/"
+          cp LICENSE README.md README.ja.md THIRD-PARTY-NOTICES.md "${archive_dir}/"
           (
             cd dist
             zip -r "${archive_name}.zip" "${archive_name}"

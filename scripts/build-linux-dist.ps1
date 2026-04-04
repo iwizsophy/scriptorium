@@ -65,6 +65,7 @@ finally {
 }
 
 Copy-Item -LiteralPath (Join-Path $repoRoot "LICENSE") -Destination $stagingDir
+Copy-Item -LiteralPath (Join-Path $repoRoot "THIRD-PARTY-NOTICES.md") -Destination $stagingDir
 Copy-Item -LiteralPath (Join-Path (Join-Path $repoRoot "docs") "linux-setup.md") -Destination (Join-Path $docsDir "linux-setup.md")
 Copy-Item -LiteralPath (Join-Path (Join-Path $repoRoot "docs") "linux-setup.ja.md") -Destination (Join-Path $docsDir "linux-setup.ja.md")
 
