@@ -90,8 +90,7 @@ func TestResolveReturnsNormalizedPaths(t *testing.T) {
 		t.Fatalf("unexpected relative path: %#v", resolved)
 	}
 	wantAbsolutePath := filepath.Join(root.Path(), "nested", "file.txt")
-	wantPath := mustEvalPath(t, filepath.Join(dir, "nested", "file.txt"))
-	if resolved.AbsolutePath != wantAbsolutePath || resolved.RealPath != wantPath {
+	if resolved.AbsolutePath != wantAbsolutePath || resolved.RealPath != wantAbsolutePath {
 		t.Fatalf("unexpected absolute or real path: %#v", resolved)
 	}
 }
