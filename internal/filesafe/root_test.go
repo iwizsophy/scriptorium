@@ -89,7 +89,8 @@ func TestResolveReturnsNormalizedPaths(t *testing.T) {
 	if resolved.RelativePath != "nested/file.txt" {
 		t.Fatalf("unexpected relative path: %#v", resolved)
 	}
-	if resolved.AbsolutePath != filepath.Join(dir, "nested", "file.txt") || resolved.RealPath != filepath.Join(dir, "nested", "file.txt") {
+	wantPath := mustEvalPath(t, filepath.Join(dir, "nested", "file.txt"))
+	if resolved.AbsolutePath != filepath.Join(dir, "nested", "file.txt") || resolved.RealPath != wantPath {
 		t.Fatalf("unexpected absolute or real path: %#v", resolved)
 	}
 }
@@ -126,7 +127,7 @@ func TestResolveCoversMissingPathAndEnabledSuccessBranches(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Resolve returned error: %v", err)
 	}
-	if resolved.RealPath != filepath.Join(dir, "nested", "file.txt") {
+	if resolved.RealPath != mustEvalPath(t, filepath.Join(dir, "nested", "file.txt")) {
 		t.Fatalf("unexpected resolved real path: %#v", resolved)
 	}
 }
@@ -151,7 +152,7 @@ func TestResolveAllowsSymlinkEscapingRootWhenEnabled(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected symlink escape to be allowed, got %v", err)
 	}
-	if resolved.RelativePath != "escape.txt" || resolved.RealPath != targetPath {
+	if resolved.RelativePath != "escape.txt" || resolved.RealPath != mustEvalPath(t, targetPath) {
 		t.Fatalf("unexpected resolved escaping symlink path: %#v", resolved)
 	}
 }
@@ -192,8 +193,8 @@ func TestRootExposesConfiguredPaths(t *testing.T) {
 	if root.Path() != want {
 		t.Fatalf("unexpected Path: got=%q want=%q", root.Path(), want)
 	}
-	if root.RealPath() != want {
-		t.Fatalf("unexpected RealPath: got=%q want=%q", root.RealPath(), want)
+	if root.RealPath() != mustEvalPath(t, want) {
+		t.Fatalf("unexpected RealPath: got=%q want=%q", root.RealPath(), mustEvalPath(t, want))
 	}
 }
 
@@ -662,4 +663,13 @@ func mustWriteFile(t *testing.T, path string, contents string) {
 	if err := os.WriteFile(path, []byte(contents), 0o644); err != nil {
 		t.Fatalf("WriteFile returned error: %v", err)
 	}
+}
+
+func mustEvalPath(t *testing.T, path string) string {
+	t.Helper()
+	resolved, err := filepath.EvalSymlinks(path)
+	if err != nil {
+		t.Fatalf("EvalSymlinks returned error for %q: %v", path, err)
+	}
+	return filepath.Clean(resolved)
 }
