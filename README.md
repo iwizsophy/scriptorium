@@ -8,6 +8,24 @@ English | [日本語](./README.ja.md)
 
 `scriptorium` is an MCP runtime for grounded Markdown and code retrieval. This repository contains the Go implementation, release packaging, and artifact builders for the runtime.
 
+## Background
+
+Even when library documentation and sample code are well maintained, AI-driven usage has often not worked well enough in practice.
+
+AI tends to scan broad portions of the documentation on each request, making it difficult to retrieve only the necessary information efficiently. This also creates problems for consistency and reproducibility in the referenced sources.
+
+In addition, even when documentation, sample code, and related materials are available, information that is understandable for humans is not always structured in a way that AI can handle effectively.
+
+As a result, teams can end up in a state where "the information exists, but it cannot be used well."
+
+`scriptorium` was developed to address this problem by treating documentation, sample code, and implementation knowledge as a single connected source of truth that AI can reference naturally.
+
+`scriptorium` is an MCP runtime that analyzes Markdown and code together and attaches grounded references to the sources behind search, retrieval, and implementation-guide generation results.
+
+This makes the origin of retrieved information traceable and helps preserve reproducibility and verifiability in development workflows, including AI-assisted ones.
+
+It also allows users to access the knowledge they need in a consistent way without having to think explicitly about where the information lives or how it should be referenced.
+
 ## Runtime Docs
 
 Current runtime and artifact behavior is documented in:
